@@ -1,9 +1,23 @@
 # 📦 TWENTY CRM DEPLOYMENT PACKAGE
 
+## Актуально (2026): controlcenter.me — `twentycrm/twenty`
+
+| Старт | Файл |
+|--------|------|
+| **Инструкция для Cursor** | [`CURSOR.md`](CURSOR.md) |
+| **Деплой на VDS (10 шагов)** | [`CURSOR-DEPLOYMENT-TASK.md`](CURSOR-DEPLOYMENT-TASK.md) |
+| **Индекс всех документов** | [`DOC-INDEX.md`](DOC-INDEX.md) |
+
+Конфиг: `docker-compose.yml` · секреты: скопировать `.env.controlcenter.example` → **`.env`** · Nginx: `controlcenter-nginx.conf` · команды: **`docker compose`** (v2).
+
+Разделы ниже описывают также **legacy**-сценарий (**crm.grainee.com**, `deploy-twenty.sh`, `.env.production`) — сверяйте с актуальным compose в корне репозитория.
+
+---
+
 **Prepared for:** Total (мониторинг GRAINEE, интеграция ROVLEX и ARBITR)  
 **Date:** 2026-03-30  
 **VDS:** 213.155.28.121  
-**Domain:** crm.grainee.com  
+**Domain (legacy в части доков):** crm.grainee.com  
 
 ---
 
