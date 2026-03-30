@@ -1,4 +1,7 @@
-version: '3.8'
+# Twenty CRM — controlcenter.me (twentycrm/twenty single image)
+# Copy .env.controlcenter.example → .env and set secrets before deploy.
+# PG_DATABASE_URL must NOT use ?schema=public — psql in entrypoint rejects it.
+
 services:
   twenty:
     image: twentycrm/twenty:latest
@@ -8,14 +11,16 @@ services:
       - "3040:3001"
     environment:
       - NODE_ENV=production
-      - SERVER_URL=https://controlcenter.me
+      - SERVER_URL=${SERVER_URL:-https://controlcenter.me}
       - PORT=3000
-      - PG_DATABASE_URL=postgresql://controlcenter_user:tK7mP9nQ2rL4wX8sF1dJ5hB3cV6xY0zA@postgres:5432/controlcenter_prod
+      - PG_DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
       - REDIS_URL=redis://redis:6379
-      - APP_SECRET=7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a
+      - APP_SECRET=${APP_SECRET}
     depends_on:
-      - postgres
-      - redis
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     networks:
       - controlcenter-network
     restart: unless-stopped
@@ -24,32 +29,34 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+      start_period: 120s
 
   postgres:
     image: postgres:16
     container_name: controlcenter-postgres
     environment:
-      - POSTGRES_DB=controlcenter_prod
-      - POSTGRES_USER=controlcenter_user
-      - POSTGRES_PASSWORD=tK7mP9nQ2rL4wX8sF1dJ5hB3cV6xY0zA
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
-      - "5434:5432"
+      - "${POSTGRES_HOST_PORT:-5434}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - controlcenter-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U controlcenter_user"]
-      interval: 30s
-      timeout: 10s
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
       retries: 5
+      start_period: 30s
 
   redis:
     image: redis:7
     container_name: controlcenter-redis
     ports:
-      - "6381:6379"
+      - "${REDIS_HOST_PORT:-6381}:6379"
     volumes:
       - redis_data:/data
     networks:
@@ -57,8 +64,8 @@ services:
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
-      interval: 30s
-      timeout: 10s
+      interval: 10s
+      timeout: 5s
       retries: 5
 
 volumes:

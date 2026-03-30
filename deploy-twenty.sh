@@ -60,14 +60,14 @@ echo -e "${YELLOW}✓ Docker Compose is installed${NC}"
 echo ""
 echo -e "${BLUE}Checking port availability...${NC}"
 
-for port in 3001 3002 5433 6380; do
+for port in 3010 3020 5433 6380; do
     if netstat -tuln 2>/dev/null | grep -q ":$port "; then
         echo -e "${RED}❌ Port $port is already in use${NC}"
         exit 1
     fi
 done
 
-echo -e "${YELLOW}✓ All ports available (3001, 3002, 5433, 6380)${NC}"
+echo -e "${YELLOW}✓ All ports available (3010, 3020, 5433, 6380)${NC}"
 
 # ========== CREATE: Directory structure ==========
 echo ""
@@ -262,7 +262,7 @@ done
 # Wait for API
 echo "Waiting for Twenty API..."
 for i in {1..30}; do
-    if curl -s http://localhost:3001/health > /dev/null 2>&1; then
+    if curl -s http://localhost:3010/health > /dev/null 2>&1; then
         echo -e "${GREEN}✓ Twenty API is ready${NC}"
         break
     fi
