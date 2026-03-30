@@ -42,11 +42,11 @@
 - [x] CURSOR-CHAT-PROMPT.md — готовый промпт для копирования
 
 ### 🔄 Синхронизация (100% ✅)
-- [x] GitHub `zaomir/twenty-crm` коммит `6f4dd65` (навигация обновлена)
+- [x] GitHub `zaomir/twenty-crm` — `6f4dd65` (ссылки в `CURSOR.md` + `DOC-INDEX.md` на CURSOR-TASK и промпт)
+- [x] GitHub `zaomir/twenty-crm` — `4a0fbd3` (этот файл **`STATUS.md`** — трекер прогресса)
 - [x] GitHub `zaomir/reviews` коммит `bb1c1f2` (LAST_SYNC обновлён)
-- [x] Локальные копии синхронизированы
-- [x] CURSOR.md обновлён со всеми ссылками
-- [x] DOC-INDEX.md обновлён со всеми файлами
+- [x] Локальные копии синхронизируются через `git pull`
+- [x] `CURSOR.md` и `DOC-INDEX.md` содержат ссылки на задачи и документы
 
 ---
 

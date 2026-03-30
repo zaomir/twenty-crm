@@ -4,6 +4,7 @@
 
 | Файл | Назначение |
 |------|------------|
+| **[STATUS.md](STATUS.md)** | Трекер прогресса: что сделано, фазы, сроки, чеклисты |
 | **[CURSOR.md](CURSOR.md)** | Точка входа для Cursor: ссылки на деплой, промпт, legacy |
 | **[CURSOR-CHAT-PROMPT.md](CURSOR-CHAT-PROMPT.md)** | Готовый длинный промпт для Cursor Chat (Help + ROADMAP + интеграции) |
 | **[CURSOR-TASK-1-HELP-PAGE.md](CURSOR-TASK-1-HELP-PAGE.md)** | Задача 1: встроить Help в Settings → Help |
@@ -34,4 +35,4 @@
 
 ---
 
-*Обновлено: 2026-03-30 (включая CURSOR-TASK-* и CURSOR-CHAT-PROMPT с b0e611d)*
+*Обновлено: 2026-03-30 (STATUS.md — 4a0fbd3; навигация — 6f4dd65)*
