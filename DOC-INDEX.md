@@ -7,6 +7,8 @@
 | **[STATUS.md](STATUS.md)** | Трекер прогресса: что сделано, фазы, сроки, чеклисты |
 | **[CURSOR.md](CURSOR.md)** | Точка входа для Cursor: ссылки на деплой, промпт, legacy |
 | **[CURSOR-CHAT-PROMPT.md](CURSOR-CHAT-PROMPT.md)** | Готовый длинный промпт для Cursor Chat (Help + ROADMAP + интеграции) |
+| **[CURSOR-FINAL-PROMPT-v2-ACTUAL-TWENTY-ARCH.md](CURSOR-FINAL-PROMPT-v2-ACTUAL-TWENTY-ARCH.md)** | Финальный промпт v2: реальная архитектура Twenty (Yarn 4, SettingsPath, MessageQueue и др.) |
+| [CURSOR-MASTER-PROMPT-FULL.md](CURSOR-MASTER-PROMPT-FULL.md) | Полный мастер-промпт (см. также v2) |
 | **[CURSOR-TASK-1-HELP-PAGE.md](CURSOR-TASK-1-HELP-PAGE.md)** | Задача 1: встроить Help в Settings → Help |
 | **[CURSOR-TASK-2-ROADMAP.md](CURSOR-TASK-2-ROADMAP.md)** | Задача 2: реализовать ROADMAP (фазы, чек-листы) |
 | **[CURSOR-TASK-3-INTEGRATIONS.md](CURSOR-TASK-3-INTEGRATIONS.md)** | Задача 3: Google Calendar, Contacts, Todoist |

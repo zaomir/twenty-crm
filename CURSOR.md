@@ -37,8 +37,12 @@
 | Реализация ROADMAP | [`CURSOR-TASK-2-ROADMAP.md`](CURSOR-TASK-2-ROADMAP.md) |
 | Google Calendar, Contacts, Todoist | [`CURSOR-TASK-3-INTEGRATIONS.md`](CURSOR-TASK-3-INTEGRATIONS.md) |
 | **Все три — один промпт** | [`CURSOR-CHAT-PROMPT.md`](CURSOR-CHAT-PROMPT.md) |
+| **Полный промпт с реальной архитектурой Twenty (v2)** | [`CURSOR-FINAL-PROMPT-v2-ACTUAL-TWENTY-ARCH.md`](CURSOR-FINAL-PROMPT-v2-ACTUAL-TWENTY-ARCH.md) |
+| Альтернатива / полный мастер-промпт | [`CURSOR-MASTER-PROMPT-FULL.md`](CURSOR-MASTER-PROMPT-FULL.md) |
 
 Справочные материалы: [`IN-APP-HELP-PAGE.md`](IN-APP-HELP-PAGE.md), [`ROADMAP.md`](ROADMAP.md), [`INTEGRATIONS.md`](INTEGRATIONS.md), [`HOW-TO-USE.md`](HOW-TO-USE.md), [`USER-GUIDE.md`](USER-GUIDE.md).
+
+Для разработки в форке **`twentyhq/twenty`** используйте в первую очередь **`CURSOR-FINAL-PROMPT-v2-ACTUAL-TWENTY-ARCH.md`** (Yarn 4, `SettingsPath`, `MessageQueue`, `TaskWorkspaceEntity`, `SecretEncryptionService`).
 
 ---
 
