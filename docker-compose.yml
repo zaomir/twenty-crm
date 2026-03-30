@@ -1,186 +1,70 @@
 version: '3.8'
-
 services:
-  # ========== PostgreSQL 15 ==========
-  twenty-postgres-prod:
-    image: postgres:15-alpine
-    container_name: twenty-postgres-prod
+  twenty:
+    image: twentycrm/twenty:latest
+    container_name: controlcenter-crm
+    ports:
+      - "3030:3000"
+      - "3040:3001"
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_INITDB_ARGS: "-c shared_preload_libraries=pg_stat_statements"
-    volumes:
-      - twenty_postgres_data:/var/lib/postgresql/data
-      - ./init-db.sql:/docker-entrypoint-initdb.d/init.sql:ro
-    ports:
-      - "5433:5432"  # Экспортируем на :5433 чтобы не конфликт с localhost:5432
-    networks:
-      - twenty-network
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "100m"
-        max-file: "5"
-
-  # ========== Redis (для сессий и кэша) ==========
-  twenty-redis:
-    image: redis:7-alpine
-    container_name: twenty-redis
-    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
-    volumes:
-      - twenty_redis_data:/data
-    ports:
-      - "6380:6379"
-    networks:
-      - twenty-network
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "50m"
-        max-file: "3"
-
-  # ========== Twenty API (Node.js) ==========
-  twenty-api:
-    image: twentyhq/twenty-backend:latest
-    container_name: twenty-api
+      - NODE_ENV=production
+      - SERVER_URL=https://controlcenter.me
+      - PORT=3000
+      - PG_DATABASE_URL=postgresql://controlcenter_user:tK7mP9nQ2rL4wX8sF1dJ5hB3cV6xY0zA@postgres:5432/controlcenter_prod
+      - REDIS_URL=redis://redis:6379
+      - APP_SECRET=7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a
     depends_on:
-      twenty-postgres-prod:
-        condition: service_healthy
-      twenty-redis:
-        condition: service_healthy
-    environment:
-      # Database
-      DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@twenty-postgres-prod:5432/${POSTGRES_DB}"
-      
-      # Server
-      NODE_ENV: ${NODE_ENV}
-      PORT: 3000
-      SERVER_URL: ${SERVER_URL}
-      FRONT_BASE_URL: ${FRONT_BASE_URL}
-      
-      # Security
-      JWT_SECRET: ${JWT_SECRET}
-      REFRESH_TOKEN_SECRET: ${REFRESH_TOKEN_SECRET}
-      ACCESS_TOKEN_EXPIRES_IN: 900  # 15 minutes
-      REFRESH_TOKEN_EXPIRES_IN: 604800  # 7 days
-      
-      # Redis
-      REDIS_URL: "redis://:${REDIS_PASSWORD}@twenty-redis:6379"
-      
-      # Integrations
-      STRIPE_API_KEY: ${STRIPE_API_KEY}
-      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
-      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
-      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
-      WHATSAPP_BUSINESS_ACCOUNT_ID: ${WHATSAPP_BUSINESS_ACCOUNT_ID}
-      WHATSAPP_ACCESS_TOKEN: ${WHATSAPP_ACCESS_TOKEN}
-      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
-      
-      # Email (SMTP)
-      EMAIL_FROM: ${EMAIL_FROM}
-      SMTP_HOST: ${SMTP_HOST}
-      SMTP_PORT: ${SMTP_PORT}
-      SMTP_USER: ${SMTP_USER}
-      SMTP_PASSWORD: ${SMTP_PASSWORD}
-      
-      # Logging
-      LOG_LEVEL: info
-      
-      # Features
-      ENABLE_WORKSPACE_SIGNUP: "false"
-      WORKSPACE_INVITATION_REQUIRED: "true"
-    volumes:
-      - twenty_api_uploads:/app/packages/server/src/uploads
-    ports:
-      - "3001:3000"
+      - postgres
+      - redis
     networks:
-      - twenty-network
+      - controlcenter-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:3000/healthz"]
       interval: 30s
       timeout: 10s
-      retries: 3
-      start_period: 60s
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "100m"
-        max-file: "5"
+      retries: 5
 
-  # ========== Twenty Web Frontend (React) ==========
-  twenty-web:
-    image: twentyhq/twenty-frontend:latest
-    container_name: twenty-web
-    depends_on:
-      - twenty-api
+  postgres:
+    image: postgres:16
+    container_name: controlcenter-postgres
     environment:
-      # API
-      REACT_APP_API_BASE_URL: ${API_BASE_URL}
-      REACT_APP_SERVER_BASE_URL: ${SERVER_URL}
-      
-      # Auth
-      REACT_APP_JWT_SECRET: ${JWT_SECRET}
-      
-      # Features
-      REACT_APP_ENABLE_WORKSPACE_SIGNUP: "false"
-      
-      # Integrations
-      REACT_APP_STRIPE_PUBLISHABLE_KEY: ${STRIPE_PUBLISHABLE_KEY}
-      REACT_APP_GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      - POSTGRES_DB=controlcenter_prod
+      - POSTGRES_USER=controlcenter_user
+      - POSTGRES_PASSWORD=tK7mP9nQ2rL4wX8sF1dJ5hB3cV6xY0zA
     ports:
-      - "3002:3000"
+      - "5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     networks:
-      - twenty-network
+      - controlcenter-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      test: ["CMD-SHELL", "pg_isready -U controlcenter_user"]
       interval: 30s
       timeout: 10s
-      retries: 3
-      start_period: 45s
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "100m"
-        max-file: "5"
+      retries: 5
 
-networks:
-  twenty-network:
-    driver: bridge
+  redis:
+    image: redis:7
+    container_name: controlcenter-redis
+    ports:
+      - "6381:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - controlcenter-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
 volumes:
-  twenty_postgres_data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /docker/twenty-data/postgres
-  
-  twenty_redis_data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /docker/twenty-data/redis
-  
-  twenty_api_uploads:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /docker/twenty-data/uploads
+  postgres_data:
+  redis_data:
+
+networks:
+  controlcenter-network:
+    driver: bridge
