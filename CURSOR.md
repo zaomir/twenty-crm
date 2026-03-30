@@ -27,7 +27,20 @@
 
 ---
 
-## 3. Промпт для чата Cursor (скопировать)
+## 2.1 Задачи продукта (Help, ROADMAP, интеграции)
+
+| Задача | Документ |
+|--------|----------|
+| Help в Settings → Help | [`CURSOR-TASK-1-HELP-PAGE.md`](CURSOR-TASK-1-HELP-PAGE.md) |
+| Реализация ROADMAP | [`CURSOR-TASK-2-ROADMAP.md`](CURSOR-TASK-2-ROADMAP.md) |
+| Google Calendar, Contacts, Todoist | [`CURSOR-TASK-3-INTEGRATIONS.md`](CURSOR-TASK-3-INTEGRATIONS.md) |
+| **Все три — один промпт** | [`CURSOR-CHAT-PROMPT.md`](CURSOR-CHAT-PROMPT.md) |
+
+Справочные материалы: [`IN-APP-HELP-PAGE.md`](IN-APP-HELP-PAGE.md), [`ROADMAP.md`](ROADMAP.md), [`INTEGRATIONS.md`](INTEGRATIONS.md), [`HOW-TO-USE.md`](HOW-TO-USE.md), [`USER-GUIDE.md`](USER-GUIDE.md).
+
+---
+
+## 3. Промпт для чата Cursor (короткий — деплой)
 
 ```text
 Репозиторий twenty-crm: актуальный деплой — controlcenter.me.
@@ -36,6 +49,8 @@
 Не добавляй ?schema=public в URL PostgreSQL. Не предлагай docker compose down -v без явного запроса на сброс БД.
 Команды — docker compose (v2).
 ```
+
+Для **Help + ROADMAP + интеграции** используйте полный текст из [`CURSOR-CHAT-PROMPT.md`](CURSOR-CHAT-PROMPT.md).
 
 ---
 

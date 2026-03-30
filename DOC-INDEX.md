@@ -5,7 +5,16 @@
 | Файл | Назначение |
 |------|------------|
 | **[CURSOR.md](CURSOR.md)** | Точка входа для Cursor: ссылки на деплой, промпт, legacy |
+| **[CURSOR-CHAT-PROMPT.md](CURSOR-CHAT-PROMPT.md)** | Готовый длинный промпт для Cursor Chat (Help + ROADMAP + интеграции) |
+| **[CURSOR-TASK-1-HELP-PAGE.md](CURSOR-TASK-1-HELP-PAGE.md)** | Задача 1: встроить Help в Settings → Help |
+| **[CURSOR-TASK-2-ROADMAP.md](CURSOR-TASK-2-ROADMAP.md)** | Задача 2: реализовать ROADMAP (фазы, чек-листы) |
+| **[CURSOR-TASK-3-INTEGRATIONS.md](CURSOR-TASK-3-INTEGRATIONS.md)** | Задача 3: Google Calendar, Contacts, Todoist |
 | **[CURSOR-DEPLOYMENT-TASK.md](CURSOR-DEPLOYMENT-TASK.md)** | Основной пошаговый деплой controlcenter.me (10 шагов + troubleshooting) |
+| [HOW-TO-USE.md](HOW-TO-USE.md) | Как пользоваться документацией / репозиторием |
+| [IN-APP-HELP-PAGE.md](IN-APP-HELP-PAGE.md) | Контент/спека страницы Help в приложении |
+| [USER-GUIDE.md](USER-GUIDE.md) | Руководство пользователя |
+| [ROADMAP.md](ROADMAP.md) | Дорожная карта продукта |
+| [INTEGRATIONS.md](INTEGRATIONS.md) | Обзор интеграций |
 | [README.md](README.md) | Обзор пакета; в начале — блок про актуальный compose |
 | [QUICK_START.md](QUICK_START.md) | Быстрый старт (legacy-ориентир crm.grainee + скрипт) |
 | [GIT-ИНСТРУКЦИЯ.md](GIT-ИНСТРУКЦИЯ.md) | Работа с git |
@@ -25,4 +34,4 @@
 
 ---
 
-*Обновлено: 2026-03-30*
+*Обновлено: 2026-03-30 (включая CURSOR-TASK-* и CURSOR-CHAT-PROMPT с b0e611d)*
